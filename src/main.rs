@@ -1,7 +1,21 @@
+use std::io;
+use std::str::FromStr;
+
+fn read_values<T: FromStr>(mes: &str) -> Result<Vec<T>, T::Err> {
+    println!("{}", &mes);
+    let mut s = String::new();
+    io::stdin()
+        .read_line(&mut s)
+        .expect("could not read from stdin");
+    s.trim()
+        .split_whitespace()
+        .map(|word| word.parse())
+        .collect()
+}
+
 fn main() {
-    let mut arr: Vec<i32>  = vec![1, 2, 3, 0];
-    println!("{:?}", arr);
-    let size = arr.len()-1;
+    let mut arr: Vec<i32> = read_values::<i32>("array to sort, e.g.: 1 4 0").unwrap();
+    let size = arr.len() - 1;
     merge_sort(&mut arr, 0, size);
 }
 
